@@ -32,14 +32,14 @@ namespace TransactionsManager.Controllers
         {
             throw new NotImplementedException();
         }
-        
+
         [HttpGet]
         [Route("daterange/{from}/{to}")]
         public async Task<IEnumerable<TransactionInfo>> GetAsync(DateTime from, DateTime to)
         {
             throw new NotImplementedException();
         }
-        
+
         [HttpGet]
         [Route("status/{status}")]
         public async Task<IEnumerable<TransactionInfo>> GetAsync(TransactionStatusEnum status)
@@ -51,20 +51,22 @@ namespace TransactionsManager.Controllers
         [Route("upload")]
         public async Task<IActionResult> UploadAsync(List<IFormFile> files)
         {
-            var result = await Task.WhenAll(files.Select(async f => {
-                var parser = _fileParserFactory.CreateTransactionFileParser(f.FileName);
-                var parserResult = await parser.ParseFileAsync(f.OpenReadStream());
-                if (parserResult.Success)
-                {
-                    var insertResult = await _transactionRepository.InsertAsync(parserResult.Transactions);
-                    return new UploadResult(parserResult, insertResult);
-                }
-                else
-                {
-                    return new UploadResult(parserResult);
-                }
-            }));
-            return Ok(result);
+            if (files == null || !files.Any())
+            {
+                return BadRequest("There is no file uploaded");
+            }
+            var file = files.FirstOrDefault();
+            var parser = _fileParserFactory.CreateTransactionFileParser(file.FileName);
+            var parserResult = parser.ParseFile(file.OpenReadStream());
+            if (parserResult.Success)
+            {
+                var insertResult = await _transactionRepository.InsertAsync(parserResult.Transactions);
+                return Ok(new UploadResult(parserResult, insertResult));
+            }
+            else
+            {
+                return Ok(new UploadResult(parserResult));
+            }
         }
     }
 }
