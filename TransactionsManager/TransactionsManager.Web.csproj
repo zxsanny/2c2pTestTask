@@ -24,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TransactionManager.Importers\TransactionManager.Parsers.csproj" />
     <ProjectReference Include="..\TransactionManager.Interfaces\TransactionManager.Common.csproj" />
+    <ProjectReference Include="..\TransactionManager.Repository\TransactionManager.Repository.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

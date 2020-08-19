@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TransactionManager.Parsers;
+using TransactionManager.Repository;
 
 namespace TransactionsManager
 {
@@ -26,6 +28,8 @@ namespace TransactionsManager
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddSingleton<ITransactionRepository, TransactionRepository>();
+            services.AddSingleton<ITransactionFileParserFactory, TransactionFileParserFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

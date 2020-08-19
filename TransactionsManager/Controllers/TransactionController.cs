@@ -13,13 +13,13 @@ namespace TransactionsManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TransactionsController : ControllerBase
+    public class TransactionController : ControllerBase
     {
-        private readonly ILogger<TransactionsController> _logger;
+        private readonly ILogger<TransactionController> _logger;
         private readonly ITransactionRepository _transactionRepository;
         private readonly ITransactionFileParserFactory _fileParserFactory;
 
-        public TransactionsController(ILogger<TransactionsController> logger, ITransactionRepository transactionRepository, ITransactionFileParserFactory fileParserFactory)
+        public TransactionController(ILogger<TransactionController> logger, ITransactionRepository transactionRepository, ITransactionFileParserFactory fileParserFactory)
         {
             _logger = logger;
             _transactionRepository = transactionRepository;
@@ -47,7 +47,7 @@ namespace TransactionsManager.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpPost]
+        [HttpPost, RequestSizeLimit(1050000)]
         [Route("upload")]
         public async Task<IActionResult> UploadAsync(List<IFormFile> files)
         {
