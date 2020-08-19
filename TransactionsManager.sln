@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Reposito
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Common", "TransactionManager.Interfaces\TransactionManager.Common.csproj", "{A1560C89-8E40-4501-A545-CD1F0C4E1569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Importers", "TransactionManager.Importers\TransactionManager.Importers.csproj", "{6D0B8833-7CA2-457B-9E9B-B9E9C1642AFC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Parsers", "TransactionManager.Importers\TransactionManager.Parsers.csproj", "{6D0B8833-7CA2-457B-9E9B-B9E9C1642AFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

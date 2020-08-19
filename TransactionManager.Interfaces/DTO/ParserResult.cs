@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace TransactionManager.Importers
+namespace TransactionManager.Parsers
 {
-    public class ImportResult
+    public class ParserResult
     {
         public bool Success { get; set; }
-        public List<Transaction> Transactions { get; set; }
+        public List<TransactionInfo> Transactions { get; set; }
         public List<string> Errors { get; set; }
     }
 }

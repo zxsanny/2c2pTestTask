@@ -1,17 +1,17 @@
 ﻿using System;
 
-namespace TransactionManager.Importers
+namespace TransactionManager.Parsers
 {
-    public class Transaction
+    public class TransactionInfo
     {
         public string Id { get; set; }
         public decimal Amount { get; set; }
         public string Currency { get; set; }
         public DateTime Date { get; set; }
-        public StatusEnum Status { get; set; }
+        public TransactionStatusEnum Status { get; set; }
     }
 
-    public enum StatusEnum
+    public enum TransactionStatusEnum
     {
         A,
         R,
