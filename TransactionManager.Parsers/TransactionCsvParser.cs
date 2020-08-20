@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,44 +10,16 @@ using TransactionManager.Common.Entities;
 
 namespace TransactionManager.Parsers
 {
-    public class TxCsvParser : BaseTXFileParser
+    public class TransactionCsvParser : BaseTXFileParser
     {
         const char FIELDS_SEPARATOR = ',';
-
-        public class CSVTransaction
-        {
-            public string Id { get; set; }
-            public decimal Amount { get; set; }
-            public string Currency { get; set; }
-            public DateTime Date { get; set; }
-            public CSVTransactionStatusEnum Status { get; set; }
-        }
-
-        public enum CSVTransactionStatusEnum
-        {
-            Approved,
-            Failed,
-            Finished
-        }
-
-        private Dictionary<CSVTransactionStatusEnum, TransactionStatusEnum> EnumMap = new Dictionary<CSVTransactionStatusEnum, TransactionStatusEnum>
+        Dictionary<CSVTransactionStatusEnum, TransactionStatusEnum> EnumMap = new Dictionary<CSVTransactionStatusEnum, TransactionStatusEnum>
         {
             { CSVTransactionStatusEnum.Approved, TransactionStatusEnum.Approved},
             { CSVTransactionStatusEnum.Finished, TransactionStatusEnum.Done},
             { CSVTransactionStatusEnum.Failed, TransactionStatusEnum.Rejected}
         };
-        
-        public class CsvTransactionMapping : CsvMapping<CSVTransaction>
-        {
-            public CsvTransactionMapping() : base()
-            {
-                MapProperty(0, x => x.Id);
-                MapProperty(1, x => x.Amount);
-                MapProperty(2, x => x.Currency);
-                MapProperty(3, x => x.Date, new DateTimeConverter("dd/MM/yyyy HH:mm:ss"));
-                MapProperty(4, x => x.Status, new EnumConverter<CSVTransactionStatusEnum>());
-            }
-        }
+
         public override ParserResult ParseStream(Stream filestream)
         {
             try
@@ -65,4 +36,33 @@ namespace TransactionManager.Parsers
             }
         }
     }
+
+    public class CSVTransaction
+    {
+        public string Id { get; set; }
+        public decimal Amount { get; set; }
+        public string Currency { get; set; }
+        public DateTime Date { get; set; }
+        public CSVTransactionStatusEnum Status { get; set; }
+    }
+
+    public enum CSVTransactionStatusEnum
+    {
+        Approved,
+        Failed,
+        Finished
+    }
+
+    public class CsvTransactionMapping : CsvMapping<CSVTransaction>
+    {
+        public CsvTransactionMapping() : base()
+        {
+            MapProperty(0, x => x.Id);
+            MapProperty(1, x => x.Amount);
+            MapProperty(2, x => x.Currency);
+            MapProperty(3, x => x.Date, new DateTimeConverter("dd/MM/yyyy HH:mm:ss"));
+            MapProperty(4, x => x.Status, new EnumConverter<CSVTransactionStatusEnum>());
+        }
+    }
+
 }

@@ -9,7 +9,9 @@
   </thead>
   <tbody>
     <tr *ngFor="let tx of transactions">
-      {{row[tx]}}
+      <td>{{tx.id}}</td>
+      <td>{{tx.payment}}</td>
+      <td>{{tx.status}}</td>
     </tr>
   </tbody>
 </table>

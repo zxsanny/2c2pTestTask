@@ -3,6 +3,7 @@ using LinqToDB.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using TransactionManager.Common.DTO;
 using TransactionManager.Common.Entities;
@@ -21,15 +22,23 @@ namespace TransactionManager.Repository
 
         public async Task<InsertResult> InsertAsync(IEnumerable<TransactionInfo> transactions)
         {
-            var result = _connection.BulkCopy(new BulkCopyOptions 
-            { 
-                MaxBatchSize = INSERT_BATCH_SIZE,
-                UseInternalTransaction = true,
-                //TODO: update rows which weren't inserted due to id duplicates
-                //TODO: check work of this:
-                //KeepIdentity = true 
-            }, transactions);
-            return new InsertResult((int)result.RowsCopied, 0);
+            try
+            {
+                //TODO: simultaneously inserting, utilize Task.WhenAll()
+                var result = _connection.BulkCopy(new BulkCopyOptions
+                {
+                    MaxBatchSize = INSERT_BATCH_SIZE,
+                    UseInternalTransaction = true
+                    //TODO: update rows which weren't inserted due to id duplicates
+                    //TODO: check work of this:
+                    //KeepIdentity = true 
+                }, transactions);
+                return new InsertResult(true, null, (int)result.RowsCopied, 0);
+            }
+            catch (Exception ex)
+            {
+                return new InsertResult(false, ex.Message);
+            }
         }
 
         public async Task<IEnumerable<TransactionInfo>> GetAsync(TransactionFilter filter)

@@ -29,24 +29,27 @@ namespace TransactionsManager.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TransactionInfo>> GetAsync([FromQuery]TransactionFilter filter)
-            => await _transactionRepository.GetAsync(filter);
+        public async Task<IEnumerable<TransactionView>> GetAsync([FromQuery]TransactionFilter filter = null)
+            => await Get(filter);
 
         [HttpGet]
         [Route("currency/{currency}")]
-        public async Task<IEnumerable<TransactionInfo>> GetAsync(string currency)
-            => await _transactionRepository.GetAsync(new TransactionFilter(currency: currency));
+        public async Task<IEnumerable<TransactionView>> GetAsync(string currency)
+            => await Get(new TransactionFilter(currency: currency));
 
         [HttpGet]
         [Route("daterange/{from}/{to}")]
-        public async Task<IEnumerable<TransactionInfo>> GetAsync(DateTime from, DateTime to)
-            => await _transactionRepository.GetAsync(new TransactionFilter(from: from, to: to));
+        public async Task<IEnumerable<TransactionView>> GetAsync(DateTime from, DateTime to)
+            => await Get(new TransactionFilter(from: from, to: to));
         
         [HttpGet]
         [Route("status/{status}")]
-        public async Task<IEnumerable<TransactionInfo>> GetAsync(TransactionStatusEnum status)
-            => await _transactionRepository.GetAsync(new TransactionFilter(status: status));
+        public async Task<IEnumerable<TransactionView>> GetAsync(TransactionStatusEnum status)
+            => await Get(new TransactionFilter(status: status));
         
+        private async Task<IEnumerable<TransactionView>> Get(TransactionFilter filter) 
+            => (await _transactionRepository.GetAsync(filter)).Select(x => new TransactionView(x)).ToList();
+
         [HttpPost, RequestSizeLimit(1050000)]
         [Route("upload")]
         public async Task<IActionResult> UploadAsync()
@@ -56,13 +59,16 @@ namespace TransactionsManager.Controllers
             {
                 return BadRequest("There is no file uploaded");
             }
+            //Create appropriate parser by file's extension 
             var extension = new FileInfo(file.FileName).Extension.Trim('.').ToLower();
             var parser = _fileParserFactory.CreateTransactionFileParser(extension);
             
             var parserResult = parser.ParseStream(file.OpenReadStream());
+            
+            //If data was parsed successfully, insert the data and return insert result
             var insertResult = parserResult.Success
                 ? await _transactionRepository.InsertAsync(parserResult.Transactions)
-                : new InsertResult();
+                : new InsertResult(false, null);
             return Ok(new UploadResult(parserResult, insertResult));
         }
     }

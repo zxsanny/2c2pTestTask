@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { NotifierService } from "angular-notifier";
 import UploadResult from '../../models/UploadResult';
 import { HttpClient } from '@angular/common/http';
+import TransactionView from '../../models/TransactionView';
 
 @Component({
   selector: 'app-home',
@@ -9,24 +10,30 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TransactionsComponent {
 
-  constructor(private notifierService: NotifierService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+  constructor(private notifierService: NotifierService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+    this.reloadTransactions();
+  }
+  public transactions: TransactionView[];
 
   reloadTransactions = () => {
-    this.http.get(this.baseUrl + 'transaction').subscribe(data => {
-      //view data
-    });
+    this.http.get<TransactionView[]>(this.baseUrl + 'transaction').subscribe(data => {
+      this.transactions = data;
+    },
+      errorResponse => this.notifierService.notify('error', errorResponse.error));
   };
 
   onUpload = (event: UploadResult) => {
     if (!event.parserResult.success) {
-      this.notifierService.show({
-        message: event.parserResult.errors.join(', '),
-        type: "error"
-      });
+      this.notifierService.notify('error', event.parserResult.errors.join(', '));
+      return;
     }
-    else {
-      this.notifierService.notify('info', `Inserted: ${event.insertResult.inserted}, updated: ${event.insertResult.updated}`);
-      this.reloadTransactions();
+
+    if (!event.insertResult.success) {
+      this.notifierService.notify('error', event.insertResult.error);
+      return;
     }
+
+    this.notifierService.notify('info', `Parsed and inserted: ${event.insertResult.inserted}, updated: ${event.insertResult.updated}`);
+    this.reloadTransactions();
   };
 }

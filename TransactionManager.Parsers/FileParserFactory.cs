@@ -8,8 +8,8 @@ namespace TransactionManager.Parsers
         {
             switch (extension)
             {
-                case "xml": return new TxXmlParser();
-                case "csv": return new TxCsvParser();
+                case "xml": return new TransactionXmlParser();
+                case "csv": return new TransactionCsvParser();
                 default:
                     throw new Exception("Unknown format");
             }

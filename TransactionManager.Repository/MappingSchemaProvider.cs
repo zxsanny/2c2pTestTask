@@ -15,7 +15,7 @@ namespace TransactionsManager
         private static readonly Lazy<MappingSchemaProvider> lazy =
             new Lazy<MappingSchemaProvider>(() => new MappingSchemaProvider());
 
-        
+        //Mapping db's columns and tables names with classes names and properties
         public MappingSchema Schema => schema ?? (schema = BuildSchema());
         private MappingSchema schema;
         private MappingSchema BuildSchema()

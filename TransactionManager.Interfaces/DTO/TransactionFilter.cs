@@ -10,6 +10,7 @@ namespace TransactionManager.Common.DTO
         public DateTime? To { get; set; }
         public TransactionStatusEnum? Status { get; set; }
 
+        public TransactionFilter() { }
         public TransactionFilter(string currency = null, DateTime? from = null, DateTime? to = null, TransactionStatusEnum? status = null)
         {
             Currency = currency;

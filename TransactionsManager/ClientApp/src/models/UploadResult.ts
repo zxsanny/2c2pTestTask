@@ -7,6 +7,8 @@ interface ParserResult {
 }
 
 interface InsertResult {
+  success: boolean;
+  error: string;
   inserted: number;
   updated: number;
 }
