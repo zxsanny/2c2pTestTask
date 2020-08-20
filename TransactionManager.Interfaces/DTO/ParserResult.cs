@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TransactionManager.Common.Entities;
 
 namespace TransactionManager.Parsers
 {

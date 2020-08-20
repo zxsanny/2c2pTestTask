@@ -6,6 +6,7 @@ using System.Text;
 using TinyCsvParser;
 using TinyCsvParser.Mapping;
 using TinyCsvParser.TypeConverter;
+using TransactionManager.Common.Entities;
 
 namespace TransactionManager.Parsers
 {

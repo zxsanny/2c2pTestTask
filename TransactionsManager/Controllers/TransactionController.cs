@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TransactionManager.Common.DTO;
+using TransactionManager.Common.Entities;
 using TransactionManager.Parsers;
 using TransactionManager.Repository;
 using TransactionsManager.DTO;
@@ -28,32 +29,24 @@ namespace TransactionsManager.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TransactionInfo>> GetAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<TransactionInfo>> GetAsync([FromQuery]TransactionFilter filter)
+            => await _transactionRepository.GetAsync(filter);
 
         [HttpGet]
         [Route("currency/{currency}")]
         public async Task<IEnumerable<TransactionInfo>> GetAsync(string currency)
-        {
-            throw new NotImplementedException();
-        }
+            => await _transactionRepository.GetAsync(new TransactionFilter(currency: currency));
 
         [HttpGet]
         [Route("daterange/{from}/{to}")]
         public async Task<IEnumerable<TransactionInfo>> GetAsync(DateTime from, DateTime to)
-        {
-            throw new NotImplementedException();
-        }
-
+            => await _transactionRepository.GetAsync(new TransactionFilter(from: from, to: to));
+        
         [HttpGet]
         [Route("status/{status}")]
         public async Task<IEnumerable<TransactionInfo>> GetAsync(TransactionStatusEnum status)
-        {
-            throw new NotImplementedException();
-        }
-
+            => await _transactionRepository.GetAsync(new TransactionFilter(status: status));
+        
         [HttpPost, RequestSizeLimit(1050000)]
         [Route("upload")]
         public async Task<IActionResult> UploadAsync()

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TransactionManager.Parsers
+namespace TransactionManager.Common.Entities
 {
     public class TransactionInfo
     {

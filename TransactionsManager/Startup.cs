@@ -1,3 +1,5 @@
+using LinqToDB.AspNet;
+using LinqToDB.AspNet.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,7 +30,13 @@ namespace TransactionsManager
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            services.AddSingleton<ITransactionRepository, TransactionRepository>();
+            services.AddLinqToDbContext<TransactionsDataConnection>((provider, options) =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("Transactions"))
+                       .UseDefaultLogging(provider);
+            });
+
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddSingleton<ITransactionFileParserFactory, TransactionFileParserFactory>();
         }
 
