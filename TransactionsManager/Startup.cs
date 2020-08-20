@@ -30,13 +30,16 @@ namespace TransactionsManager
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            //I prefer Linq2db micro ORM instead of monstrous and heavy EntityFramework. Here I can have almost precise control on generated SQL and hence performance.
             services.AddLinqToDbContext<TransactionsDataConnection>((provider, options) =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Transactions"))
                        .UseDefaultLogging(provider)
-                       .UseMappingSchema(new MappingSchemaBuilder().BuildMapping());
+                       //In general, I don't like singletons, but I don't want to build intermediate service provider and resolve dependency either
+                       //So, here is a nice way to show using some of not so usable things in a correct place, I presume.
+                       .UseMappingSchema(MappingSchemaProvider.Instance.Schema); 
             });
-
+            
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddSingleton<ITransactionFileParserFactory, TransactionFileParserFactory>();
         }

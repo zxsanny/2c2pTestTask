@@ -1,4 +1,4 @@
-import TransactionInfo from "./TransactionInfo";
+import TransactionInfo from "./TransactionView";
 
 interface ParserResult {
   success: boolean;
