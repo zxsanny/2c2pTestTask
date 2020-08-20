@@ -2,6 +2,6 @@
 {
     public interface ITransactionFileParserFactory
     {
-        ITransactionFileParser CreateTransactionFileParser(string fileName);
+        ITxFileParser CreateTransactionFileParser(string fileName);
     }
 }

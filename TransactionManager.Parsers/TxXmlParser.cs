@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 using TransactionManager.Common.Entities;
 
 namespace TransactionManager.Parsers
 {
-    public class TransactionXMLParser : ITransactionFileParser
+    public class TxXmlParser : BaseTXFileParser
     {
         [XmlRoot("Transactions")]
         public class XMLTransactions
@@ -62,28 +61,19 @@ namespace TransactionManager.Parsers
             { XMLTransactionStatus.Rejected, TransactionStatusEnum.Rejected}
         };
 
-        public ParserResult ParseStream(Stream filestream)
+        public override ParserResult ParseStream(Stream filestream)
         {
-            var txs = new XmlSerializer(typeof(XMLTransactions)).Deserialize(filestream) as XMLTransactions;
-            var result = new ParserResult()
+            try
             {
-                Success = true,
-                Transactions = new List<TransactionInfo>(txs.Transactions.Length),
-                Errors = new List<string>()
-            };
-            foreach (var tx in txs.Transactions)
-            {
-                if (tx.IsValid)
-                {
-                    result.Transactions.Add(new TransactionInfo(tx.Id, tx.PaymentDetails.Amount, tx.PaymentDetails.CurrencyCode, tx.Date.Value, EnumMap[tx.Status.Value]));
-                }
-                else
-                {
-                    result.Success = false;
-                    result.Errors.Add($"Missing info here: {tx.Id}, {tx.PaymentDetails.Amount} {tx.PaymentDetails.CurrencyCode} {tx.Date} {tx.Status}");
-                }
+                var txs = new XmlSerializer(typeof(XMLTransactions)).Deserialize(filestream) as XMLTransactions;
+                return Process(txs.Transactions, tx => tx.IsValid,
+                    tx => new TransactionInfo(tx.Id, tx.PaymentDetails.Amount, tx.PaymentDetails.CurrencyCode, tx.Date.Value, EnumMap[tx.Status.Value]),
+                    tx => $"Missing info here: {tx.Id}, {tx.PaymentDetails.Amount} {tx.PaymentDetails.CurrencyCode} {tx.Date} {tx.Status}");
             }
-            return result;
+            catch (Exception ex)
+            {
+                return new ParserResult(ex.Message);
+            }
         }
     }
 }

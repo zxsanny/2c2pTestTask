@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using TransactionManager.Common.Entities;
 
 namespace TransactionManager.Parsers
 {
-    public class TransactionCSVParser : ITransactionFileParser
+    public class TxCsvParser : BaseTXFileParser
     {
         const char FIELDS_SEPARATOR = ',';
 
@@ -36,8 +37,8 @@ namespace TransactionManager.Parsers
             { CSVTransactionStatusEnum.Finished, TransactionStatusEnum.Done},
             { CSVTransactionStatusEnum.Failed, TransactionStatusEnum.Rejected}
         };
-
-    public class CsvTransactionMapping : CsvMapping<CSVTransaction>
+        
+        public class CsvTransactionMapping : CsvMapping<CSVTransaction>
         {
             public CsvTransactionMapping() : base()
             {
@@ -48,37 +49,20 @@ namespace TransactionManager.Parsers
                 MapProperty(4, x => x.Status, new EnumConverter<CSVTransactionStatusEnum>());
             }
         }
-        public ParserResult ParseStream(Stream filestream)
+        public override ParserResult ParseStream(Stream filestream)
         {
-            var parser = new CsvParser<CSVTransaction>(new CsvParserOptions(false, FIELDS_SEPARATOR), new CsvTransactionMapping());
-            var txs = parser.ReadFromStream(filestream, Encoding.Default).ToList();
-            
-            var result = new ParserResult()
+            try
             {
-                Success = true,
-                Transactions = new List<TransactionInfo>(txs.Count),
-                Errors = new List<string>()
-            };
-            foreach (var tx in txs)
-            {
-                if (tx.IsValid)
-                {
-                    //Simple constructor, don't like solutions like Automapper - it's getting cumbersome and fragile - 
-                    //first, register in another place, and after some entity change, errors will be shown only in runtime
-                    result.Transactions.Add(new TransactionInfo(tx.Result.Id, tx.Result.Amount, tx.Result.Currency, tx.Result.Date, EnumMap[tx.Result.Status]));
-                }
-                else 
-                {
-                    result.Success = false;
-                    result.Errors.Add($"Row: {tx.RowIndex} Transaction Id: {tx.Result?.Id} Error: {tx.Error.Value}");
-                }
+                var parser = new CsvParser<CSVTransaction>(new CsvParserOptions(false, FIELDS_SEPARATOR), new CsvTransactionMapping());
+                var txs = parser.ReadFromStream(filestream, Encoding.Default).ToList();
+                return Process(txs, tx => tx.IsValid,
+                    tx => new TransactionInfo(tx.Result.Id, tx.Result.Amount, tx.Result.Currency, tx.Result.Date, EnumMap[tx.Result.Status]),
+                    tx => $"Row: {tx.RowIndex} Transaction Id: {tx.Result?.Id} Error: {tx.Error.Value}");
             }
-            return result;
+            catch (Exception ex)
+            {
+                return new ParserResult(ex.Message);
+            }
         }
-    }
-
-    public class CSVData
-    {
-
     }
 }

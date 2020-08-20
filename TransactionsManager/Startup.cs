@@ -40,7 +40,7 @@ namespace TransactionsManager
             });
             
             services.AddScoped<ITransactionRepository, TransactionRepository>();
-            services.AddSingleton<ITransactionFileParserFactory, TransactionFileParserFactory>();
+            services.AddSingleton<ITransactionFileParserFactory, FileParserFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
