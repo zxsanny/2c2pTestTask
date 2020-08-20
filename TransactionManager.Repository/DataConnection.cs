@@ -1,7 +1,6 @@
 ﻿using LinqToDB.Configuration;
 using LinqToDB.Data;
 using System.Linq;
-using TransactionManager.Common.Entities;
 
 namespace TransactionManager.Repository
 {

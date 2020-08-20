@@ -44,7 +44,7 @@ namespace TransactionManager.Parsers
                 MapProperty(0, x => x.Id);
                 MapProperty(1, x => x.Amount);
                 MapProperty(2, x => x.Currency);
-                MapProperty(3, x => x.Date);
+                MapProperty(3, x => x.Date, new DateTimeConverter("dd/MM/yyyy HH:mm:ss"));
                 MapProperty(4, x => x.Status, new EnumConverter<CSVTransactionStatusEnum>());
             }
         }

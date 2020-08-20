@@ -12,6 +12,6 @@ interface InsertResult {
 }
 
 export default interface UploadResult {
-  ParserResult: ParserResult;
-  InsertResult: InsertResult;
+  parserResult: ParserResult;
+  insertResult: InsertResult;
 }

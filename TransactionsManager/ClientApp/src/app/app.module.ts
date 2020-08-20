@@ -30,7 +30,18 @@ import { NotifierModule } from 'angular-notifier';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
-    NotifierModule
+    NotifierModule.withConfig({
+      theme: 'material',
+      position: {
+        horizontal: {
+          position: "right",
+          distance: 10
+        }
+      },
+      behaviour: {
+        stacking: 3
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

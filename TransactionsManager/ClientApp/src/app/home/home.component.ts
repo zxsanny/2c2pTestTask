@@ -18,13 +18,14 @@ export class HomeComponent {
   };
 
   onUpload = (event: UploadResult) => {
-    if (!event.ParserResult.success) {
+    if (!event.parserResult.success) {
       this.notifierService.show({
-        message: event.ParserResult.errors.join(', '),
+        message: event.parserResult.errors.join(', '),
         type: "error"
       });
     }
     else {
+      this.notifierService.notify('info', `Inserted: ${event.insertResult.inserted}, updated: ${event.insertResult.updated}`);
       this.reloadTransactions();
     }
   };
