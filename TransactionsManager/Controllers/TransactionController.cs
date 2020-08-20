@@ -59,7 +59,7 @@ namespace TransactionsManager.Controllers
             var extension = new FileInfo(file.FileName).Extension.Trim('.').ToLower();
             var parser = _fileParserFactory.CreateTransactionFileParser(extension);
             
-            var parserResult = parser.ParseFile(file.OpenReadStream());
+            var parserResult = parser.ParseStream(file.OpenReadStream());
             var insertResult = parserResult.Success
                 ? await _transactionRepository.InsertAsync(parserResult.Transactions)
                 : new InsertResult();

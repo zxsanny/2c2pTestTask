@@ -62,7 +62,7 @@ namespace TransactionManager.Parsers
             { XMLTransactionStatus.Rejected, TransactionStatusEnum.Rejected}
         };
 
-        public ParserResult ParseFile(Stream filestream)
+        public ParserResult ParseStream(Stream filestream)
         {
             var txs = new XmlSerializer(typeof(XMLTransactions)).Deserialize(filestream) as XMLTransactions;
             var result = new ParserResult()

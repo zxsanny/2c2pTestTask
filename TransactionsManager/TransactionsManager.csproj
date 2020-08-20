@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TransactionManager.Importers\TransactionManager.Parsers.csproj" />
     <ProjectReference Include="..\TransactionManager.Interfaces\TransactionManager.Common.csproj" />
+    <ProjectReference Include="..\TransactionManager.Parsers\TransactionManager.Parsers.csproj" />
     <ProjectReference Include="..\TransactionManager.Repository\TransactionManager.Repository.csproj" />
   </ItemGroup>
 

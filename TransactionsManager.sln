@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionsManager", "TransactionsManager\TransactionsManager.csproj", "{E570A1C1-0324-419C-A2D5-F9049B8615F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Repository", "TransactionManager.Repository\TransactionManager.Repository.csproj", "{0578D173-82EA-4A00-A156-50BAC1239B67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionManager.Repository", "TransactionManager.Repository\TransactionManager.Repository.csproj", "{0578D173-82EA-4A00-A156-50BAC1239B67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Common", "TransactionManager.Interfaces\TransactionManager.Common.csproj", "{A1560C89-8E40-4501-A545-CD1F0C4E1569}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionManager.Common", "TransactionManager.Interfaces\TransactionManager.Common.csproj", "{A1560C89-8E40-4501-A545-CD1F0C4E1569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Parsers", "TransactionManager.Importers\TransactionManager.Parsers.csproj", "{6D0B8833-7CA2-457B-9E9B-B9E9C1642AFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionManager.Parsers", "TransactionManager.Parsers\TransactionManager.Parsers.csproj", "{99DCD0EF-554F-4F17-9CE2-A9215C863F22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Tests", "TransactionManager.Tests\TransactionManager.Tests.csproj", "{5784DC92-4CCB-4AD3-8180-C1F7C4353B5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionManager.Tests", "TransactionManager.Tests\TransactionManager.Tests.csproj", "{9A061495-4699-486E-83F2-343A01285249}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,14 @@ Global
 		{A1560C89-8E40-4501-A545-CD1F0C4E1569}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1560C89-8E40-4501-A545-CD1F0C4E1569}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1560C89-8E40-4501-A545-CD1F0C4E1569}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D0B8833-7CA2-457B-9E9B-B9E9C1642AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D0B8833-7CA2-457B-9E9B-B9E9C1642AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D0B8833-7CA2-457B-9E9B-B9E9C1642AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D0B8833-7CA2-457B-9E9B-B9E9C1642AFC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5784DC92-4CCB-4AD3-8180-C1F7C4353B5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5784DC92-4CCB-4AD3-8180-C1F7C4353B5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5784DC92-4CCB-4AD3-8180-C1F7C4353B5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5784DC92-4CCB-4AD3-8180-C1F7C4353B5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99DCD0EF-554F-4F17-9CE2-A9215C863F22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99DCD0EF-554F-4F17-9CE2-A9215C863F22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99DCD0EF-554F-4F17-9CE2-A9215C863F22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99DCD0EF-554F-4F17-9CE2-A9215C863F22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A061495-4699-486E-83F2-343A01285249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A061495-4699-486E-83F2-343A01285249}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A061495-4699-486E-83F2-343A01285249}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A061495-4699-486E-83F2-343A01285249}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -48,9 +48,9 @@ namespace TransactionManager.Parsers
                 MapProperty(4, x => x.Status, new EnumConverter<CSVTransactionStatusEnum>());
             }
         }
-        public ParserResult ParseFile(Stream filestream)
+        public ParserResult ParseStream(Stream filestream)
         {
-            var parser = new CsvParser<CSVTransaction>(new CsvParserOptions(true, FIELDS_SEPARATOR), new CsvTransactionMapping());
+            var parser = new CsvParser<CSVTransaction>(new CsvParserOptions(false, FIELDS_SEPARATOR), new CsvTransactionMapping());
             var txs = parser.ReadFromStream(filestream, Encoding.Default).ToList();
             
             var result = new ParserResult()
