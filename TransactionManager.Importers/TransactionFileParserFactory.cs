@@ -5,9 +5,8 @@ namespace TransactionManager.Parsers
 {
     public class TransactionFileParserFactory : ITransactionFileParserFactory
     {
-        public ITransactionFileParser CreateTransactionFileParser(string fileName)
+        public ITransactionFileParser CreateTransactionFileParser(string extension)
         {
-            var extension = new FileInfo(fileName).Extension.ToLower();
             switch (extension)
             {
                 case "xml": return new TransactionXMLParser();

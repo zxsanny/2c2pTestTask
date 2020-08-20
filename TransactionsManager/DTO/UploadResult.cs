@@ -5,8 +5,8 @@ namespace TransactionsManager.DTO
 {
     public class UploadResult
     {
-        ParserResult ParserResult { get; set; }
-        InsertResult InsertResult { get; set; }
+        public ParserResult ParserResult { get; set; }
+        public InsertResult InsertResult { get; set; }
 
         public UploadResult(ParserResult parserResult, InsertResult insertResult = null)
         {

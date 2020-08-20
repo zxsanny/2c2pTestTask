@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +28,12 @@ namespace TransactionsManager.Controllers
         }
 
         [HttpGet]
+        public async Task<IEnumerable<TransactionInfo>> GetAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet]
         [Route("currency/{currency}")]
         public async Task<IEnumerable<TransactionInfo>> GetAsync(string currency)
         {
@@ -49,24 +56,21 @@ namespace TransactionsManager.Controllers
 
         [HttpPost, RequestSizeLimit(1050000)]
         [Route("upload")]
-        public async Task<IActionResult> UploadAsync(List<IFormFile> files)
+        public async Task<IActionResult> UploadAsync()
         {
-            if (files == null || !files.Any())
+            var file = Request.Form.Files.FirstOrDefault();
+            if (file == null)
             {
                 return BadRequest("There is no file uploaded");
             }
-            var file = files.FirstOrDefault();
-            var parser = _fileParserFactory.CreateTransactionFileParser(file.FileName);
+            var extension = new FileInfo(file.FileName).Extension.Trim('.').ToLower();
+            var parser = _fileParserFactory.CreateTransactionFileParser(extension);
+            
             var parserResult = parser.ParseFile(file.OpenReadStream());
-            if (parserResult.Success)
-            {
-                var insertResult = await _transactionRepository.InsertAsync(parserResult.Transactions);
-                return Ok(new UploadResult(parserResult, insertResult));
-            }
-            else
-            {
-                return Ok(new UploadResult(parserResult));
-            }
+            var insertResult = parserResult.Success
+                ? await _transactionRepository.InsertAsync(parserResult.Transactions)
+                : new InsertResult();
+            return Ok(new UploadResult(parserResult, insertResult));
         }
     }
 }

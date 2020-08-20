@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionsManager", "TransactionsManager\TransactionsManager.csproj", "{E570A1C1-0324-419C-A2D5-F9049B8615F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TransactionsManager.Web", "TransactionsManager\TransactionsManager.Web.csproj", "{E570A1C1-0324-419C-A2D5-F9049B8615F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionManager.Repository", "TransactionManager.Repository\TransactionManager.Repository.csproj", "{0578D173-82EA-4A00-A156-50BAC1239B67}"
 EndProject

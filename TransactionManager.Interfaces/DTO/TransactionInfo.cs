@@ -11,7 +11,7 @@ namespace TransactionManager.Parsers
         public TransactionStatusEnum Status { get; set; }
 
         public TransactionInfo() { }
-
+        
         public TransactionInfo(string id, decimal amount, string currency, DateTime date, TransactionStatusEnum status)
         {
             Id = id;
