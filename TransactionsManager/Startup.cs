@@ -33,7 +33,8 @@ namespace TransactionsManager
             services.AddLinqToDbContext<TransactionsDataConnection>((provider, options) =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Transactions"))
-                       .UseDefaultLogging(provider);
+                       .UseDefaultLogging(provider)
+                       .UseMappingSchema(new MappingSchemaBuilder().BuildMapping());
             });
 
             services.AddScoped<ITransactionRepository, TransactionRepository>();

@@ -5,9 +5,9 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
+  templateUrl: './transactions.component.html',
 })
-export class HomeComponent {
+export class TransactionsComponent {
 
   constructor(private notifierService: NotifierService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 

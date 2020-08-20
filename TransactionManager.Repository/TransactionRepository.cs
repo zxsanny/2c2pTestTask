@@ -21,7 +21,6 @@ namespace TransactionManager.Repository
 
         public async Task<InsertResult> InsertAsync(IEnumerable<TransactionInfo> transactions)
         {
-            await _connection.BeginTransactionAsync();
             var result = _connection.BulkCopy(new BulkCopyOptions 
             { 
                 MaxBatchSize = INSERT_BATCH_SIZE,
@@ -30,7 +29,6 @@ namespace TransactionManager.Repository
                 //TODO: check work of this:
                 //KeepIdentity = true 
             }, transactions);
-            await _connection.CommitTransactionAsync();
             return new InsertResult((int)result.RowsCopied, 0);
         }
 
