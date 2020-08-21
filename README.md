@@ -1,4 +1,4 @@
-# c2cp Test Task Transactions Manager
+# 2c2p Test Task Transactions Manager
 ## Getting started
 ### Pre requisites:
 1. [Visual Studio 2019 with installed .NET Standard 2.0](https://visualstudio.microsoft.com/vs/)
