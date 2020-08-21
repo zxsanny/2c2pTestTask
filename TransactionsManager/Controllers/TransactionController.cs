@@ -61,14 +61,29 @@ namespace TransactionsManager.Controllers
             }
             //Create appropriate parser by file's extension 
             var extension = new FileInfo(file.FileName).Extension.Trim('.').ToLower();
-            var parser = _fileParserFactory.CreateTransactionFileParser(extension);
+            ITransactionFileParser parser;
+            try
+            {
+                parser = _fileParserFactory.CreateTransactionFileParser(extension);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             
             var parserResult = parser.ParseStream(file.OpenReadStream());
-            
+
             //If data was parsed successfully, insert the data and return insert result
-            var insertResult = parserResult.Success
-                ? await _transactionRepository.InsertAsync(parserResult.Transactions)
-                : new InsertResult(false, null);
+            if (!parserResult.Success)
+            {
+                return BadRequest(string.Join(", ", parserResult.Errors));
+            }
+            var insertResult = await _transactionRepository.InsertAsync(parserResult.Transactions);
+            if (!insertResult.Success)
+            {
+                return BadRequest(insertResult.Error);
+            }
+
             return Ok(new UploadResult(parserResult, insertResult));
         }
     }

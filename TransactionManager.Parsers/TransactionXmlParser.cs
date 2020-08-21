@@ -6,7 +6,7 @@ using TransactionManager.Common.Entities;
 
 namespace TransactionManager.Parsers
 {
-    public class TransactionXmlParser : BaseTXFileParser
+    public class TransactionXmlParser : BaseTransactionFileParser
     {
         Dictionary<XMLTransactionStatus, TransactionStatusEnum> EnumMap = new Dictionary<XMLTransactionStatus, TransactionStatusEnum>
         {

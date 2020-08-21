@@ -23,16 +23,6 @@ export class TransactionsComponent {
   };
 
   onUpload = (event: UploadResult) => {
-    if (!event.parserResult.success) {
-      this.notifierService.notify('error', event.parserResult.errors.join(', '));
-      return;
-    }
-
-    if (!event.insertResult.success) {
-      this.notifierService.notify('error', event.insertResult.error);
-      return;
-    }
-
     this.notifierService.notify('info', `Parsed and inserted: ${event.insertResult.inserted}, updated: ${event.insertResult.updated}`);
     this.reloadTransactions();
   };

@@ -1,5 +1,6 @@
 import { Component, Inject, Output, EventEmitter, OnInit } from '@angular/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'file-upload',
@@ -12,7 +13,7 @@ export class FileUploadComponent implements OnInit {
   public message: string;
   @Output() public onUploadFinished = new EventEmitter();
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+  constructor(private notifierService: NotifierService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   ngOnInit() {}
 
@@ -32,6 +33,6 @@ export class FileUploadComponent implements OnInit {
           this.message = 'Upload success';
           this.onUploadFinished.emit(event.body);
         }
-      });
+      }, (errorMessage) => this.notifierService.notify('error', errorMessage.error ));
   };
 }

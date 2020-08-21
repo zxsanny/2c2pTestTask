@@ -10,7 +10,7 @@ using TransactionManager.Common.Entities;
 
 namespace TransactionManager.Parsers
 {
-    public class TransactionCsvParser : BaseTXFileParser
+    public class TransactionCsvParser : BaseTransactionFileParser
     {
         const char FIELDS_SEPARATOR = ',';
         Dictionary<CSVTransactionStatusEnum, TransactionStatusEnum> EnumMap = new Dictionary<CSVTransactionStatusEnum, TransactionStatusEnum>

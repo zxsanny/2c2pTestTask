@@ -6,12 +6,12 @@ using TransactionManager.Common.Entities;
 
 namespace TransactionManager.Parsers
 {
-    public interface ITxFileParser
+    public interface ITransactionFileParser
     {
         ParserResult ParseStream(Stream filestream);
     }
 
-    public abstract class BaseTXFileParser : ITxFileParser
+    public abstract class BaseTransactionFileParser : ITransactionFileParser
     {
         public abstract ParserResult ParseStream(Stream filestream);
         
