@@ -23,6 +23,7 @@ namespace TransactionsManager
             var builder = MappingSchema.Default.GetFluentMappingBuilder();
             builder.Entity<TransactionInfo>().HasTableName("Transactions");
 
+            builder.Entity<TransactionInfoTemp>().HasTableName("_TransactionsTempUpdate");
             return builder.MappingSchema;
         }
     }
